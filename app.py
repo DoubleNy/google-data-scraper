@@ -71,7 +71,7 @@ def read_file():
 @app.route('/google/ro', methods=['GET'])
 def ro():
     # series = read_file()
-    series = [1,2,3]
+    series = [1, 2, 3]
     return jsonify(series)
 
 
@@ -80,4 +80,5 @@ def county(county_name):
     return f'{county_name}'
 
 
-app.run()
+if __name__ == '__main__':
+    app.run(threaded=True, port=5000)
