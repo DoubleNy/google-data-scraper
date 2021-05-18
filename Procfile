@@ -1,1 +1,1 @@
-worker: python main.py scrape google
+worker: python app.py

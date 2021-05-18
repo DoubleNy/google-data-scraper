@@ -23,13 +23,13 @@ HEADERS = [
 def read_file():
     df = pd.read_csv(GOOGLE_REPORT_PATH)
 
+    df = df.sample(5000)
+
     df = df.fillna(0)
 
     print(df.shape)
 
     series = list()
-
-    df = df.sample(5000)
 
     for index, row in df.iterrows():
         series.append({

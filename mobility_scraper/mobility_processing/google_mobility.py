@@ -24,7 +24,7 @@ def build_report(source,
        google (DataFrame): generated Google report
     """
     # read the raw report
-    google = pd.read_csv(source, low_memory=True)
+    google = pd.read_csv(source, low_memory=False)
     # shorten value column names
     google.columns = google.columns.str.replace(r"_percent_change_from_baseline", "")
     # remove underscores from column names
@@ -74,7 +74,6 @@ def build_report(source,
                                )]
         # google["county"].fillna("Total", inplace=True)
         # google["city"].fillna("Total", inplace=True)
-        print(google.sample(10))
     elif report_type == "regions_detailed" or report_type == "world_regions_detailed":
         if countries is not None and report_type == "regions_detailed":
             google = google[google.country.isin(countries)]
