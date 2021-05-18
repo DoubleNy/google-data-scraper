@@ -24,7 +24,7 @@ def build_report(source,
        google (DataFrame): generated Google report
     """
     # read the raw report
-    google = pd.read_csv(source, low_memory=False)
+    google = pd.read_csv(source, low_memory=True)
     # shorten value column names
     google.columns = google.columns.str.replace(r"_percent_change_from_baseline", "")
     # remove underscores from column names
