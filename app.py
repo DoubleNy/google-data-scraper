@@ -70,8 +70,7 @@ def read_file():
 
 @app.route('/google/ro', methods=['GET'])
 def ro():
-    # series = read_file()
-    series = [1, 2, 3]
+    series = read_file()
     return jsonify(series)
 
 
