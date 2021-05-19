@@ -5,7 +5,7 @@
 1. pip install 
 
 
-2. gunicorn app:app
+2. python app.py
 
 
 ### Run scraper 
