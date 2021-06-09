@@ -20,6 +20,8 @@ HEADERS = [
     "residential",
  ]
 
+counties = set()
+
 def read_file():
     df = pd.read_csv(GOOGLE_REPORT_PATH)
 
@@ -27,12 +29,17 @@ def read_file():
 
     df = df.fillna(0)
 
-    print(df.shape)
+    # print(df.sample(10))
 
     series = list()
 
+    global counties
+
     for index, row in df.iterrows():
+        if isinstance(row['county'], str):
+            counties.add(row['county'])
         series.append({
+            'county': row['county'],
             'date': row['date'],
             "retail and recreation": row['retail and recreation'],
             "grocery and pharmacy": row['grocery and pharmacy'],
@@ -68,15 +75,37 @@ def read_file():
 
     return sorted(series, key=lambda x: x['date'])
 
+
+
+def filter_by_counties():
+    series = read_file()
+
+    filtered_series = dict()
+
+    for county in counties:
+        curr_items = []
+        for item in series:
+            if item['county'] == county:
+                curr_items.append(item)
+        # print(len(curr_items))
+        filtered_series[county] = curr_items
+        # break
+    # print(filtered_series)
+    # print(series[0]['county'])
+    # county0 = [x for x in series if x['county'] == counties[0]]
+    #
+    # print(county0)
+    return filtered_series
+
 @app.route('/google/ro', methods=['GET'])
 def ro():
     series = read_file()
     return jsonify(series)
 
-
-@app.route('/google/ro/<county_name>', methods=['GET'])
-def county(county_name):
-    return f'{county_name}'
+@app.route('/google/ro/counties', methods=['GET'])
+def county():
+    series = filter_by_counties()
+    return jsonify(series)
 
 
 if __name__ == '__main__':
